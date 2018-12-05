@@ -84,7 +84,9 @@
   <ItemGroup>
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="BLL\Implements\ProgressCheckTool\ProgressCheckRepository.cs" />
     <Compile Include="BLL\Implements\PurchaseOrderTool\PurchaseOrderRepository.cs" />
+    <Compile Include="BLL\Interface\ProgressCheckTool\IProgressCheckRepository.cs" />
     <Compile Include="BLL\Interface\PurchaseOrderTool\IPurchaseOrderRepository.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
