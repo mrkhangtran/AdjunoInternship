@@ -40,6 +40,7 @@ namespace InternProject.Controllers
 
             if (ModelState.IsValid)
             {
+
                 //PurchaseOrder.Add(addModel.Id, addModel.OrderDate, addModel.Buyer, addModel.Currency, addModel.Season, addModel.Department, addModel.Vendor)
                 PurchaseOrder.Add(ConverttoOrderModel(addModel));
 

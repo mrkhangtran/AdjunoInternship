@@ -28,6 +28,11 @@ namespace BLL_Layer.BLL.Implements
             db.GetDB().SaveChanges();
         }
 
+        public void Edit(int Id, OrderModel newOrder)
+        {
+            //db.GetDB().Orders.Find(Id).
+        }
+
         public OrderModel Find(int Id)
         {
             return db.GetDB().Orders.Find(Id);

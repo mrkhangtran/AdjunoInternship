@@ -86,7 +86,6 @@
     <Compile Include="BLL\Implements\PurchaseOrderTool\PurchaseOrderRepository.cs" />
     <Compile Include="BLL\Interface\IPODBContext.cs" />
     <Compile Include="BLL\Interface\PurchaseOrderTool\IPurchaseOrderRepository.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

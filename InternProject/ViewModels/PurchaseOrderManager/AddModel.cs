@@ -47,10 +47,12 @@ namespace InternProject.ViewModels.PurchaseOrderManager
         //Droplist of Ports
         [Required]
         [Display(Name = "Port of Loading")]
+        [PortIsDifferent("PortOfDelivery")]
         public string PortOfLoading { get; set; }
 
         [Required]
         [Display(Name = "Port of Delivery")]
+        [PortIsDifferent("PortOfLoading")]
         public string PortOfDelivery { get; set; }
         public IEnumerable<SelectListItem> Ports { get; set; }
 

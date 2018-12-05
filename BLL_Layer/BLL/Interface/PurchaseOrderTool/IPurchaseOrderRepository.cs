@@ -10,6 +10,7 @@ namespace BLL_Layer.BLL.Interface
     public interface IPurchaseOrderRepository 
     {
         void Add(OrderModel order);
+        void Edit(int Id, OrderModel newOrder);
         OrderModel Find(int Id);
     }
 }
