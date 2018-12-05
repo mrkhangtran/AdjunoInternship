@@ -4,10 +4,8 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using DAL_Layer.DAL.Models.ShipmentTrack;
 
-
-namespace DAL_Layer.DAL.Models.DeliveryTrack
+namespace DomainModel.Models
 {
     public class DCConfirmationDetailModel
     {

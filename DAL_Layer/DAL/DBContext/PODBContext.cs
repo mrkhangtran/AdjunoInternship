@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
-using DAL_Layer.DAL.Models.OrderTrack;
-using DAL_Layer.DAL.Models.DeliveryTrack;
-using DAL_Layer.DAL.Models.ShipmentTrack;
+using DomainModel.Models;
 
 namespace DAL_Layer.DAL.DBContext
 {

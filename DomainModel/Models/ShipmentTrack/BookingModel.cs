@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace DAL_Layer.DAL.Models.ShipmentTrack
+namespace DomainModel.Models
 {
     public class BookingModel
     {
@@ -22,16 +22,10 @@ namespace DAL_Layer.DAL.Models.ShipmentTrack
         public DateTime ETA { get; set; }       
         public string Voyage { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, int.MaxValue)]
         public int Quantity { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, int.MaxValue)]
         public int Cartoons { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, 9999999999999999.99)]
         public decimal Cube { get; set; }      
         public string PackType { get; set; }       
         public string LoadingType { get; set; }     
@@ -39,8 +33,6 @@ namespace DAL_Layer.DAL.Models.ShipmentTrack
         public string FreightTerms { get; set; }       
         public string Consignee { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, 9999999999999999.99)]
         public decimal GrossWeight { get; set; }
         public DateTime BookingDate { get; set; }
         public string BookingType { get; set; }

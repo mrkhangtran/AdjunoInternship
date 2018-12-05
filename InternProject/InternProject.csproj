@@ -307,9 +307,9 @@
       <Project>{846792d8-ea77-4913-bc9b-d64148322af4}</Project>
       <Name>BLL_Layer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DAL_Layer\DAL_Layer.csproj">
-      <Project>{83a951f3-c694-472a-aac7-98a119b98e6e}</Project>
-      <Name>DAL_Layer</Name>
+    <ProjectReference Include="..\DomainModel\DomainModel.csproj">
+      <Project>{dfc0f2ad-1e18-4484-bebd-c926cdf6009c}</Project>
+      <Name>DomainModel</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

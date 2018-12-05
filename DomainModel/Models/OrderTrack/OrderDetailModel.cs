@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DAL_Layer.DAL.Models.OrderTrack
+namespace DomainModel.Models
 {
     public class OrderDetailModel
     {
@@ -35,24 +35,19 @@ namespace DAL_Layer.DAL.Models.OrderTrack
 
         [Required]
         //[Display(Name = "Item Quantity")]
-        [Range(0, float.MaxValue)]
         public float Quantity { get; set; }
 
         [Required]
-        [Range(0, float.MaxValue)]
         public float Cartons { get; set; }
 
         [Required]
-        [Range(0, float.MaxValue)]
         public float Cube { get; set; }
 
         [Required]
-        [Range(0, float.MaxValue)]
         public float KGS { get; set; }
 
         [Required]
         //[Display(Name = "Unit Price")]
-        [Range(0, float.MaxValue)]
         public float UnitPrice { get; set; }
 
         //Item Quantity*Unit Price = Total Price
@@ -66,7 +61,6 @@ namespace DAL_Layer.DAL.Models.OrderTrack
 
         [Required]
         //[Display(Name = "Retail Price")]
-        [Range(0, float.MaxValue)]
         public float RetailPrice { get; set; }
 
         //Item Quantity*Retail Price = Total Retail Price

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace DAL_Layer.DAL.Models.ShipmentTrack
+namespace DomainModel.Models
 {
     public class ManifestModel
     {
@@ -23,37 +23,23 @@ namespace DAL_Layer.DAL.Models.ShipmentTrack
 
         public string Loading { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, int.MaxValue)]
         public int Bars { get; set; }
         public string Equipment { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, int.MaxValue)]
         public int Quantity { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, int.MaxValue)]
         public int Cartoons { get; set; }
 
         public string Cartons { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, 9999999999999999.99)]
         public decimal Cube { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, 9999999999999999.99)]
         public decimal KGS { get; set; }
         public string FreightTerms { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, 9999999999999999.99)]
         public decimal ChargeableKGS { get; set; }
         public string PackType { get; set; }
 
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
-        [Range(0, 9999999999999999.99)]
         public decimal NetKGS { get; set; }
         public virtual BookingModel Booking { get; set; }
 

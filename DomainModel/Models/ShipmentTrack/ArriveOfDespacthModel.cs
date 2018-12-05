@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DAL_Layer.DAL.Models.ShipmentTrack
+namespace DomainModel.Models
 {
     public class ArriveOfDespacthModel
     {

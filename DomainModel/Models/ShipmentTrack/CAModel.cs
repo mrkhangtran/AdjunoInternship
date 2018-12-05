@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace DAL_Layer.DAL.Models.ShipmentTrack
+namespace DomainModel.Models
 {
     public class CAModel
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
-using DAL_Layer.DAL.Models.OrderTrack;
+using DomainModel.Models;
 using System.Web.Mvc;
 
 namespace InternProject.ViewModels.PurchaseOrderManager

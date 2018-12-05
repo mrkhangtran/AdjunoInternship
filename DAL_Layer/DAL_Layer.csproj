@@ -82,25 +82,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\UnityConfig.cs" />
-    <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="DAL\DBContext\PODBContext.cs" />
-    <Compile Include="DAL\Models\DeliveryTrack\DCBookingDetailModel.cs" />
-    <Compile Include="DAL\Models\DeliveryTrack\DCBookingModel.cs" />
-    <Compile Include="DAL\Models\DeliveryTrack\DCConfirmationDetailModel.cs" />
-    <Compile Include="DAL\Models\DeliveryTrack\DCConfirmationModel.cs" />
-    <Compile Include="DAL\Models\OrderTrack\OrderDetailModel.cs" />
-    <Compile Include="DAL\Models\OrderTrack\OrderModel.cs" />
-    <Compile Include="DAL\Models\OrderTrack\ProgressCheckModel.cs" />
-    <Compile Include="DAL\Models\ShipmentTrack\ArriveOfDespacthModel.cs" />
-    <Compile Include="DAL\Models\ShipmentTrack\BookingModel.cs" />
-    <Compile Include="DAL\Models\ShipmentTrack\CAModel.cs" />
-    <Compile Include="DAL\Models\ShipmentTrack\ManifestModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DomainModel\DomainModel.csproj">
+      <Project>{dfc0f2ad-1e18-4484-bebd-c926cdf6009c}</Project>
+      <Name>DomainModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

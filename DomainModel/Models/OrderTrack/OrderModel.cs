@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace DAL_Layer.DAL.Models.OrderTrack
+namespace DomainModel.Models
 {
     public class OrderModel
     {

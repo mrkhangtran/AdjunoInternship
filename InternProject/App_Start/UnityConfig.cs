@@ -1,8 +1,8 @@
 using System;
 
 using Unity;
-using BLL_Layer.BLL.Interface.PurchaseOrderTool;
-using BLL_Layer.BLL.Implements.PurchaseOrderTool;
+using BLL_Layer.BLL.Interface;
+using BLL_Layer.BLL.Implements;
 
 namespace InternProject
 {
@@ -39,6 +39,7 @@ namespace InternProject
         public static void RegisterTypes(IUnityContainer container)
         {
             container.RegisterType< IPurchaseOrderRepository, PurchaseOrderRepository >();
+            container.RegisterType< IPODBContext , PODBContextRepository >();
             // NOTE: To load from web.config uncomment the line below.
             // Make sure to add a Unity.Configuration to the using statements.
             // container.LoadConfiguration();

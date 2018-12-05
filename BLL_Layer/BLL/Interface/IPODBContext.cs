@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DomainModel.Models;
+using System.Data.Entity;
+using DAL_Layer.DAL.DBContext;
 
 namespace BLL_Layer.BLL.Interface
 {
-    public interface IPurchaseOrderRepository 
+    public interface IPODBContext
     {
-        void Add(OrderModel order);
-        OrderModel Find(int Id);
+        PODBContext GetDB();
     }
 }
