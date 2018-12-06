@@ -311,6 +311,10 @@
       <Project>{dfc0f2ad-1e18-4484-bebd-c926cdf6009c}</Project>
       <Name>DomainModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DTOs\DTOs.csproj">
+      <Project>{98c5bc74-accd-4058-b4a6-06e1fa606608}</Project>
+      <Name>DTOs</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

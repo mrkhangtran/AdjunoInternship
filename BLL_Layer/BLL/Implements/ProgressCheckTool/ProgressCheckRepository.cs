@@ -1,5 +1,5 @@
 ﻿using BLL_Layer.BLL.Interface.ProgressCheckTool;
-using DAL_Layer.DAL.Models.OrderTrack;
+using DomainModel.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
