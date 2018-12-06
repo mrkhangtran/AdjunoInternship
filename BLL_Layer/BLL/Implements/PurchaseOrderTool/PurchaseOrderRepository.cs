@@ -5,6 +5,8 @@ using System.Web;
 using BLL_Layer.BLL.Interface;
 using DomainModel.Models;
 using System.Data.Entity;
+using DTOs;
+using DatabaseRepo;
 
 namespace BLL_Layer.BLL.Implements
 {
@@ -17,9 +19,9 @@ namespace BLL_Layer.BLL.Implements
 
         }
 
-        public PurchaseOrderRepository(IPODBContext pODB)
+        public PurchaseOrderRepository(IPODBContext db)
         {
-            this.db = pODB;
+            this.db = db;
         }
 
         public void Add(OrderModel order)
@@ -33,9 +35,13 @@ namespace BLL_Layer.BLL.Implements
             //db.GetDB().Orders.Find(Id).
         }
 
-        public OrderModel Find(int Id)
+        public OrderDTO Find(int Id)
         {
-            return db.GetDB().Orders.Find(Id);
+            OrderDTO orderDTO = new OrderDTO();
+            OrderModel orderModel= db.GetDB().Orders.Find(Id);
+            orderDTO.Id = orderModel.Id; //mapping data
+            return orderDTO;
         }
+        
     }
 }

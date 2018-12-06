@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DomainModel.Models;
+using DTOs;
 
 namespace BLL_Layer.BLL.Interface
 {
@@ -11,6 +12,6 @@ namespace BLL_Layer.BLL.Interface
     {
         void Add(OrderModel order);
         void Edit(int Id, OrderModel newOrder);
-        OrderModel Find(int Id);
+        OrderDTO Find(int Id);
     }
 }

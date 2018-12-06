@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using InternProject.ViewModels.PurchaseOrderManager;
 using BLL_Layer.BLL.Interface;
 using DomainModel.Models;
+using DTOs;
+using Unity;
 
 namespace InternProject.Controllers
 {
@@ -21,8 +23,9 @@ namespace InternProject.Controllers
         public PurchaseOrderController(IPurchaseOrderRepository purchaseOrder)
         {
             this.PurchaseOrder = purchaseOrder;
+            /*var container = new UnityContainer();
+            container.RegisterInstance<IPurchaseOrderRepository>(this.PurchaseOrder);*/
         }
-
         public ActionResult Create()
         {
             AddModel defaultModel = new AddModel();
@@ -129,17 +132,17 @@ namespace InternProject.Controllers
         // GET: PurchaseOrder/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            int Id = id ?? default(int);
-            OrderModel addModel = PurchaseOrder.Find(Id);
-            if (addModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(addModel);
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //int Id = id ?? default(int);
+            ////OrderModel addModel = PurchaseOrder.Find(Id);
+            //if (addModel == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            return View();
         }
 
         // POST: PurchaseOrder/Edit/5

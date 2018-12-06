@@ -3,6 +3,7 @@ using System;
 using Unity;
 using BLL_Layer.BLL.Interface;
 using BLL_Layer.BLL.Implements;
+using DatabaseRepo;
 
 namespace InternProject
 {
@@ -38,8 +39,8 @@ namespace InternProject
         /// </remarks>
         public static void RegisterTypes(IUnityContainer container)
         {
-            container.RegisterType< IPurchaseOrderRepository, PurchaseOrderRepository >();
-            container.RegisterType< IPODBContext , PODBContextRepository >();
+            container.RegisterInstance<IPurchaseOrderRepository> (new PurchaseOrderRepository());
+            container.RegisterInstance<IPODBContext>(new PODBContextRepository());
             // NOTE: To load from web.config uncomment the line below.
             // Make sure to add a Unity.Configuration to the using statements.
             // container.LoadConfiguration();
