@@ -5,6 +5,7 @@ using System.Web;
 using BLL_Layer.BLL.Interface;
 using DomainModel.Models;
 using System.Data.Entity;
+using DTOs;
 
 namespace BLL_Layer.BLL.Implements
 {
@@ -28,9 +29,13 @@ namespace BLL_Layer.BLL.Implements
             db.GetDB().SaveChanges();
         }
 
-        public OrderModel Find(int Id)
+        public OrderDTO Find(int Id)
         {
-            return db.GetDB().Orders.Find(Id);
+            OrderDTO orderDTO = new OrderDTO();
+            OrderModel orderModel= db.GetDB().Orders.Find(Id);
+            orderDTO.Id = orderModel.Id; //mapping data
+            return orderDTO;
         }
+        
     }
 }

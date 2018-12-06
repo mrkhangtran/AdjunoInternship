@@ -184,6 +184,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DisplayAndFilterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProgressCheckController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -202,6 +203,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ProgessCheck\ProgressCheckViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrderManager\AddModel.cs" />
     <Compile Include="ViewModels\PurchaseOrderManager\SimilarOrLaterThanShipDate.cs" />
   </ItemGroup>
@@ -273,6 +275,7 @@
     <Content Include="Views\PurchaseOrder\Index.cshtml" />
     <Content Include="Views\Layout\Home.cshtml" />
     <Content Include="Views\DisplayAndFilter\DisplayAndFilter.cshtml" />
+    <Content Include="Views\ProgressCheck\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -307,6 +310,10 @@
     <ProjectReference Include="..\DomainModel\DomainModel.csproj">
       <Project>{dfc0f2ad-1e18-4484-bebd-c926cdf6009c}</Project>
       <Name>DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DTOs\DTOs.csproj">
+      <Project>{98c5bc74-accd-4058-b4a6-06e1fa606608}</Project>
+      <Name>DTOs</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
