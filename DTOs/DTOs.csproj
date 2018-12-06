@@ -69,8 +69,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OrderDetailDTO.cs" />
+    <Compile Include="PortIsDifferent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OrderDTO.cs" />
+    <Compile Include="SimilarOrLaterThanShipDate.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DomainModel\DomainModel.csproj">

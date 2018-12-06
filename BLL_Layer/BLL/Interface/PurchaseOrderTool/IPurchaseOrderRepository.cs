@@ -10,8 +10,8 @@ namespace BLL_Layer.BLL.Interface
 {
     public interface IPurchaseOrderRepository 
     {
-        void Add(OrderModel order);
-        void Edit(int Id, OrderModel newOrder);
+        void Add(OrderDTO order);
+        void Edit(int Id, OrderDTO newOrder);
         OrderDTO Find(int Id);
     }
 }

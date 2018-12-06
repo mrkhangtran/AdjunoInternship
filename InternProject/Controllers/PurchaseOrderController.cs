@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using InternProject.ViewModels.PurchaseOrderManager;
 using BLL_Layer.BLL.Interface;
 using DomainModel.Models;
 using DTOs;
@@ -28,7 +27,7 @@ namespace InternProject.Controllers
         }
         public ActionResult Create()
         {
-            AddModel defaultModel = new AddModel();
+            OrderDTO defaultModel = new OrderDTO();
 
             defaultModel = SetDropDownList(defaultModel);
 
@@ -37,15 +36,13 @@ namespace InternProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,OrderDate,Buyer,Currency,Season,Department,Vendor,Company,Origin,PortOfLoading,PortOfDelivery,OrderType,Factory,Mode,ShipDate,LatestShipDate,DeliveryDate,Status")] AddModel addModel)
+        public ActionResult Create([Bind(Include = "Id,OrderDate,Buyer,Currency,Season,Department,Vendor,Company,Origin,PortOfLoading,PortOfDelivery,OrderType,Factory,Mode,ShipDate,LatestShipDate,DeliveryDate,Status")] OrderDTO addModel)
         {
             addModel = SetDropDownList(addModel);
 
             if (ModelState.IsValid)
             {
-
-                //PurchaseOrder.Add(addModel.Id, addModel.OrderDate, addModel.Buyer, addModel.Currency, addModel.Season, addModel.Department, addModel.Vendor)
-                PurchaseOrder.Add(ConverttoOrderModel(addModel));
+                PurchaseOrder.Add(addModel);
 
                 return RedirectToAction("Index");
             }
@@ -53,9 +50,9 @@ namespace InternProject.Controllers
             return View(addModel);
         }
 
-        private AddModel SetDropDownList(AddModel addModel)
+        private OrderDTO SetDropDownList(OrderDTO addModel)
         {
-            AddModel init = new AddModel();
+            OrderDTO init = new OrderDTO();
             init = addModel;
 
             init.Seasons = GetSelectListItems(SeasonList());
@@ -64,43 +61,6 @@ namespace InternProject.Controllers
             init.Modes = GetSelectListItems(new List<string> { "Road", "Sea", "Air" });
 
             return init;
-        }
-
-        private OrderModel ConverttoOrderModel(AddModel addModel)
-        {
-            OrderModel order = new OrderModel();
-
-            order.Id = addModel.Id;
-            order.OrderDate = addModel.OrderDate;
-            order.Buyer = addModel.Buyer;
-            order.Currency = addModel.Currency;
-            order.Season = addModel.Season;
-            order.Department = addModel.Department;
-            order.Vendor = addModel.Vendor;
-            order.Company = addModel.Company;
-            order.Origin = addModel.Origin;
-            order.PortOfLoading = addModel.PortOfLoading;
-            order.PortOfDelivery = addModel.PortOfDelivery;
-            order.OrderType = addModel.OrderType;
-            order.Factory = addModel.Factory;
-            order.Mode = addModel.Mode;
-            order.ShipDate = addModel.ShipDate;
-            order.LatestShipDate = addModel.LatestShipDate;
-            order.DeliveryDate = addModel.DeliveryDate;
-            order.Status = addModel.Status;
-
-            order.POQuantity = 0;
-            if (addModel.PODetails != null)
-            {
-                foreach (var i in addModel.PODetails)
-                {
-                    order.POQuantity += i.Quantity;
-                }
-            }
-
-            order.Supplier = "";
-
-            return order;
         }
 
         private IEnumerable<string> SeasonList()
@@ -150,7 +110,7 @@ namespace InternProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,OrderDate,Buyer,Currency,Season,Department,Vendor,Company,Origin,PortOfLoading,PortOfDelivery,OrderType,Factory,Mode,ShipDate,LatestShipDate,DeliveryDate,Status")] AddModel addModel)
+        public ActionResult Edit([Bind(Include = "Id,OrderDate,Buyer,Currency,Season,Department,Vendor,Company,Origin,PortOfLoading,PortOfDelivery,OrderType,Factory,Mode,ShipDate,LatestShipDate,DeliveryDate,Status")] OrderDTO addModel)
         {
             if (ModelState.IsValid)
             {

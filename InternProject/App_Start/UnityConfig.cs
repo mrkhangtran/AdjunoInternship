@@ -4,6 +4,7 @@ using Unity;
 using BLL_Layer.BLL.Interface;
 using BLL_Layer.BLL.Implements;
 using DatabaseRepo;
+using Unity.Lifetime;
 
 namespace InternProject
 {
@@ -39,8 +40,12 @@ namespace InternProject
         /// </remarks>
         public static void RegisterTypes(IUnityContainer container)
         {
-            container.RegisterInstance<IPurchaseOrderRepository> (new PurchaseOrderRepository());
-            container.RegisterInstance<IPODBContext>(new PODBContextRepository());
+            //container.RegisterInstance<IPurchaseOrderRepository> (new PurchaseOrderRepository());
+            container.RegisterType<IPurchaseOrderRepository, PurchaseOrderRepository>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IPODBContext, PODBContextRepository>(new ContainerControlledLifetimeManager());
+            //container.RegisterInstance<IPODBContext>("POdb", new PODBContextRepository());
+
+            
             // NOTE: To load from web.config uncomment the line below.
             // Make sure to add a Unity.Configuration to the using statements.
             // container.LoadConfiguration();

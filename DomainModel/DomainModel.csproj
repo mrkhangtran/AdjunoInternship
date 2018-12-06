@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Base.cs" />
     <Compile Include="Models\DeliveryTrack\DCBookingDetailModel.cs" />
     <Compile Include="Models\DeliveryTrack\DCBookingModel.cs" />
     <Compile Include="Models\DeliveryTrack\DCConfirmationDetailModel.cs" />
