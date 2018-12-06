@@ -6,6 +6,7 @@ using BLL_Layer.BLL.Interface;
 using DomainModel.Models;
 using System.Data.Entity;
 using DTOs;
+using DatabaseRepo;
 
 namespace BLL_Layer.BLL.Implements
 {
@@ -18,15 +19,20 @@ namespace BLL_Layer.BLL.Implements
 
         }
 
-        public PurchaseOrderRepository(IPODBContext pODB)
+        public PurchaseOrderRepository(IPODBContext db)
         {
-            this.db = pODB;
+            this.db = db;
         }
 
         public void Add(OrderModel order)
         {
             db.GetDB().Orders.Add(order);
             db.GetDB().SaveChanges();
+        }
+
+        public void Edit(int Id, OrderModel newOrder)
+        {
+            //db.GetDB().Orders.Find(Id).
         }
 
         public OrderDTO Find(int Id)

@@ -10,6 +10,7 @@ using InternProject.ViewModels.PurchaseOrderManager;
 using BLL_Layer.BLL.Interface;
 using DomainModel.Models;
 using DTOs;
+using Unity;
 
 namespace InternProject.Controllers
 {
@@ -22,6 +23,8 @@ namespace InternProject.Controllers
         public PurchaseOrderController(IPurchaseOrderRepository purchaseOrder)
         {
             this.PurchaseOrder = purchaseOrder;
+            /*var container = new UnityContainer();
+            container.RegisterInstance<IPurchaseOrderRepository>(this.PurchaseOrder);*/
         }
         public ActionResult Create()
         {
@@ -40,6 +43,7 @@ namespace InternProject.Controllers
 
             if (ModelState.IsValid)
             {
+
                 //PurchaseOrder.Add(addModel.Id, addModel.OrderDate, addModel.Buyer, addModel.Currency, addModel.Season, addModel.Department, addModel.Vendor)
                 PurchaseOrder.Add(ConverttoOrderModel(addModel));
 

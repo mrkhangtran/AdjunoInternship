@@ -205,6 +205,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ProgessCheck\ProgressCheckViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrderManager\AddModel.cs" />
+    <Compile Include="ViewModels\PurchaseOrderManager\PortIsDifferent.cs" />
     <Compile Include="ViewModels\PurchaseOrderManager\SimilarOrLaterThanShipDate.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -306,6 +307,10 @@
     <ProjectReference Include="..\BLL_Layer\BLL_Layer.csproj">
       <Project>{846792d8-ea77-4913-bc9b-d64148322af4}</Project>
       <Name>BLL_Layer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatabaseRepo\DatabaseRepo.csproj">
+      <Project>{c2c3b1d4-6ee3-4a5c-9ca5-781a347ec067}</Project>
+      <Name>DatabaseRepo</Name>
     </ProjectReference>
     <ProjectReference Include="..\DomainModel\DomainModel.csproj">
       <Project>{dfc0f2ad-1e18-4484-bebd-c926cdf6009c}</Project>
