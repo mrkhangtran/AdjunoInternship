@@ -7,7 +7,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BLL_Layer.BLL.Interface;
-using DomainModel.Models;
 using DTOs;
 using Unity;
 
@@ -22,9 +21,8 @@ namespace InternProject.Controllers
         public PurchaseOrderController(IPurchaseOrderRepository purchaseOrder)
         {
             this.PurchaseOrder = purchaseOrder;
-            /*var container = new UnityContainer();
-            container.RegisterInstance<IPurchaseOrderRepository>(this.PurchaseOrder);*/
         }
+
         public ActionResult Create()
         {
             OrderDTO defaultModel = new OrderDTO();
@@ -92,17 +90,19 @@ namespace InternProject.Controllers
         // GET: PurchaseOrder/Edit/5
         public ActionResult Edit(int? id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //int Id = id ?? default(int);
-            ////OrderModel addModel = PurchaseOrder.Find(Id);
-            //if (addModel == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            int Id = id ?? default(int);
+            OrderDTO addModel = PurchaseOrder.Find(Id);
+            addModel = SetDropDownList(addModel);
+            if (addModel == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(addModel);
         }
 
         // POST: PurchaseOrder/Edit/5
@@ -114,11 +114,76 @@ namespace InternProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                /*db.Entry(addModel).State = EntityState.Modified;
-                db.SaveChanges();*/
+                PurchaseOrder.Edit(addModel);
+
                 return RedirectToAction("Index");
             }
             return View(addModel);
+        }
+
+        public ActionResult CreateItem(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }     
+            int Id = id ?? default(int);
+
+            OrderDetailDTO defaultModel = new OrderDetailDTO();
+            defaultModel.OrderId = Id;
+
+            return View(defaultModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateItem([Bind(Include = "OrderId,Id,Description,Tariff,Quantity,Cartons,Cube,KGS,UnitPrice,RetailPrice,Warehouse,Size,Colour")] OrderDetailDTO addModel)
+        {
+
+            if (ModelState.IsValid)
+            {
+                PurchaseOrder.AddItem(addModel);
+
+                return RedirectToAction("Index");
+            }
+
+            return View(addModel);
+        }
+
+        // GET: PurchaseOrder/Edit/5
+        public ActionResult EditItem(int? id, int? orderId)
+        {
+            if ((id == null) || (orderId == null))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            int Id = id ?? default(int);
+            int OrderId = orderId ?? default(int);
+
+            OrderDetailDTO editModel = PurchaseOrder.FindOrderDetail(Id, OrderId);
+
+            if (editModel == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(editModel);
+        }
+
+        // POST: PurchaseOrder/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditItem([Bind(Include = "OrderId,Id,Description,Tariff,Quantity,Cartons,Cube,KGS,UnitPrice,RetailPrice,Warehouse,Size,Colour")] OrderDetailDTO editModel)
+        {
+            if (ModelState.IsValid)
+            {
+                PurchaseOrder.EditItem(editModel);
+
+                return RedirectToAction("Index");
+            }
+            return View(editModel);
         }
 
         // GET: PurchaseOrder

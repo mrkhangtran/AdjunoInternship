@@ -15,9 +15,6 @@ namespace DTOs
         [Range(0, 9999999999)] //up to 10 digits
         public int Id { get; set; }
 
-        //unknown
-        public string Line { get; set; }
-
         [StringLength(255)]
         public string Description { get; set; }
 
@@ -30,24 +27,26 @@ namespace DTOs
         [StringLength(30)]
         public string Size { get; set; }
 
-        //unknown
-        public string Item { get; set; }
-
         [Required]
         [Display(Name = "Item Quantity")]
+        [Range(0, float.MaxValue, ErrorMessage = "Value should not be negative")]
         public float Quantity { get; set; }
 
         [Required]
+        [Range(0, float.MaxValue, ErrorMessage = "Value should not be negative")]
         public float Cartons { get; set; }
 
         [Required]
+        [Range(0, float.MaxValue, ErrorMessage = "Value should not be negative")]
         public float Cube { get; set; }
 
         [Required]
+        [Range(0, float.MaxValue, ErrorMessage = "Value should not be negative")]
         public float KGS { get; set; }
 
         [Required]
         [Display(Name = "Unit Price")]
+        [Range(0, float.MaxValue, ErrorMessage = "Value should not be negative")]
         public float UnitPrice { get; set; }
 
         //Item Quantity*Unit Price = Total Price
@@ -61,6 +60,7 @@ namespace DTOs
 
         [Required]
         [Display(Name = "Retail Price")]
+        [Range(0, float.MaxValue, ErrorMessage = "Value should not be negative")]
         public float RetailPrice { get; set; }
 
         //Item Quantity*Retail Price = Total Retail Price
@@ -78,7 +78,5 @@ namespace DTOs
         [Required]
         //[ForeignKey("OrderModel")]
         public int OrderId { get; set; }
-
-        public virtual OrderDTO OrderModel { get; set; }
     }
 }
