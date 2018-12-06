@@ -1,4 +1,4 @@
-﻿@model InternProject.ViewModels.PurchaseOrderManager.AddModel
+﻿@model DTOs.OrderDTO
 
 
 
@@ -253,6 +253,106 @@
             </td>
         </tr>
 
+    </table>
+
+    <table class="uk-table">
+        <tr>
+            <th>
+                @Html.LabelFor(model => model.PODetails.First().Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.LabelFor(model => model.PODetails.First().Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.LabelFor(model => model.PODetails.First().Tariff, htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.LabelFor(model => model.PODetails.First().Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.LabelFor(model => model.PODetails.First().Cartons, htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.LabelFor(model => model.PODetails.First().Cube, htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.LabelFor(model => model.PODetails.First().KGS, htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.LabelFor(model => model.PODetails.First().UnitPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.LabelFor(model => model.PODetails.First().TotalPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.LabelFor(model => model.PODetails.First().RetailPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.LabelFor(model => model.PODetails.First().TotalRetailPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.LabelFor(model => model.PODetails.First().Warehouse, htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.LabelFor(model => model.PODetails.First().Size, htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                @Html.LabelFor(model => model.PODetails.First().Colour, htmlAttributes: new { @class = "control-label col-md-2" })
+            </th>
+            <th>
+                Add New
+            </th>
+        </tr>
+        @if (Model.PODetails != null)
+        {
+            foreach (var item in Model.PODetails)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tariff)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cartons)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cube)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KGS)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RetailPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalRetailPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Warehouse)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Size)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Colour)
+                    </td>
+                </tr>
+            }
+        }
     </table>
 
 }
