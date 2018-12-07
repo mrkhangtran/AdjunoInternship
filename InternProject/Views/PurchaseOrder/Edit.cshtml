@@ -14,13 +14,10 @@
     <table class="uk-table">
         <tr>
             <td>
-                @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+                
             </td>
             <td>
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "uk-input" } })
-                    @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
-                </div>
+    
             </td>
             <td colspan="3"></td>
             <td>
@@ -35,12 +32,12 @@
 
 
             <td>
-                @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.PONumber, htmlAttributes: new { @class = "control-label col-md-2" })
             </td>
             <td>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "uk-input" } })
-                    @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.PONumber, new { htmlAttributes = new { @class = "uk-input" } })
+                    @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "text-danger" })
                 </div>
             </td>
 
@@ -298,7 +295,7 @@
                 @Html.LabelFor(model => model.PODetails.First().Colour, htmlAttributes: new { @class = "control-label col-md-2" })
             </th>
             <th>
-                @Html.ActionLink("Add Item", "CreateItem")
+                @Html.ActionLink("Add Item", "CreateItem", new { id = Model.Id })
             </th>
         </tr>
         @if (Model.PODetails != null)
@@ -349,7 +346,7 @@
                         @Html.DisplayFor(modelItem => item.Colour)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit Item", "EditItem", new { id = item.Id, orderId = item.OrderId })
+                        @Html.ActionLink("Edit Item", "EditItem", new { id = item.Id })
                     </td>
                 </tr>
             }

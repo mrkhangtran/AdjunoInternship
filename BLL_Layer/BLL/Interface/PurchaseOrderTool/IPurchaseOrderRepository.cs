@@ -16,6 +16,6 @@ namespace BLL_Layer.BLL.Interface
 
         void AddItem(OrderDetailDTO orderDetail);
         void EditItem(OrderDetailDTO newOrderDetail);
-        OrderDetailDTO FindOrderDetail(int id, int orderId);
+        OrderDetailDTO FindOrderDetail(int id);
     }
 }

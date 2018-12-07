@@ -23,6 +23,11 @@ namespace InternProject.Controllers
             this.PurchaseOrder = purchaseOrder;
         }
 
+        public ActionResult Index()
+        { 
+            return View();
+        }
+
         public ActionResult Create()
         {
             OrderDTO defaultModel = new OrderDTO();
@@ -34,7 +39,7 @@ namespace InternProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,OrderDate,Buyer,Currency,Season,Department,Vendor,Company,Origin,PortOfLoading,PortOfDelivery,OrderType,Factory,Mode,ShipDate,LatestShipDate,DeliveryDate,Status")] OrderDTO addModel)
+        public ActionResult Create([Bind(Include = "PONumber,OrderDate,Buyer,Currency,Season,Department,Vendor,Company,Origin,PortOfLoading,PortOfDelivery,OrderType,Factory,Mode,ShipDate,LatestShipDate,DeliveryDate,Status")] OrderDTO addModel)
         {
             addModel = SetDropDownList(addModel);
 
@@ -87,6 +92,25 @@ namespace InternProject.Controllers
             return selectList;
         }
 
+        public ActionResult Copy(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            int Id = id ?? default(int);
+            OrderDTO addModel = PurchaseOrder.Find(Id);
+            addModel = SetDropDownList(addModel);
+            addModel.PONumber = 0;
+
+            if (addModel == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(addModel);
+        }
+
         // GET: PurchaseOrder/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -110,7 +134,7 @@ namespace InternProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,OrderDate,Buyer,Currency,Season,Department,Vendor,Company,Origin,PortOfLoading,PortOfDelivery,OrderType,Factory,Mode,ShipDate,LatestShipDate,DeliveryDate,Status")] OrderDTO addModel)
+        public ActionResult Edit([Bind(Include = "PONumber,OrderDate,Buyer,Currency,Season,Department,Vendor,Company,Origin,PortOfLoading,PortOfDelivery,OrderType,Factory,Mode,ShipDate,LatestShipDate,DeliveryDate,Status")] OrderDTO addModel)
         {
             if (ModelState.IsValid)
             {
@@ -151,16 +175,15 @@ namespace InternProject.Controllers
         }
 
         // GET: PurchaseOrder/Edit/5
-        public ActionResult EditItem(int? id, int? orderId)
+        public ActionResult EditItem(int? id)
         {
-            if ((id == null) || (orderId == null))
+            if (id == null) 
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             int Id = id ?? default(int);
-            int OrderId = orderId ?? default(int);
 
-            OrderDetailDTO editModel = PurchaseOrder.FindOrderDetail(Id, OrderId);
+            OrderDetailDTO editModel = PurchaseOrder.FindOrderDetail(Id);
 
             if (editModel == null)
             {
@@ -185,17 +208,10 @@ namespace InternProject.Controllers
             }
             return View(editModel);
         }
-
-        // GET: PurchaseOrder
-        /*public ActionResult Index()
-        {
-            List<AddModel> addModels = new List<AddModel>();
-            addModels = db.Orders.ToList();
-            return View(db.AddModels.ToList());
-        }
+        
 
         // GET: PurchaseOrder/Details/5
-        public ActionResult Details(int? id)
+        /*public ActionResult Details(int? id)
         {
             if (id == null)
             {

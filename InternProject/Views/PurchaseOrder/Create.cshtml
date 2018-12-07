@@ -12,16 +12,14 @@
     <h4>Add Order</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
     <table class="uk-table">
         <tr>
             <td>
-                @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+                
             </td>
             <td>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "uk-input" } })
-                    @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+                    
                 </div>
             </td>
             <td colspan="3"></td>
@@ -33,16 +31,20 @@
                 </div>
             </td>
         </tr>
+    </table>
+
+    <table class="uk-table">
+        
         <tr>
 
 
             <td>
-                @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.PONumber, htmlAttributes: new { @class = "control-label col-md-2" })
             </td>
             <td>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "uk-input" } })
-                    @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.PONumber, new { htmlAttributes = new { @class = "uk-input" } })
+                    @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "text-danger" })
                 </div>
             </td>
 
@@ -300,7 +302,7 @@
                 @Html.LabelFor(model => model.PODetails.First().Colour, htmlAttributes: new { @class = "control-label col-md-2" })
             </th>
             <th>
-                Add New
+                @Html.ActionLink("Add Item", "CreateItem")
             </th>
         </tr>
         @if (Model.PODetails != null)

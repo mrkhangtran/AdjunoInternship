@@ -95,6 +95,10 @@
     <Compile Include="Migrations\201812060846292_AddBaseModel.Designer.cs">
       <DependentUpon>201812060846292_AddBaseModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812070331217_AddPONumber.cs" />
+    <Compile Include="Migrations\201812070331217_AddPONumber.Designer.cs">
+      <DependentUpon>201812070331217_AddPONumber.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -117,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812060846292_AddBaseModel.resx">
       <DependentUpon>201812060846292_AddBaseModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812070331217_AddPONumber.resx">
+      <DependentUpon>201812070331217_AddPONumber.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

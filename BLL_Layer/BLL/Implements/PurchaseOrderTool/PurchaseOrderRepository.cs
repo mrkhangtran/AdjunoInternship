@@ -32,6 +32,7 @@ namespace BLL_Layer.BLL.Implements
             OrderModel orderModel = new OrderModel();
 
             orderModel.Id = orderDTO.Id;
+            orderModel.PONumber = orderDTO.PONumber;
             orderModel.OrderDate = orderDTO.OrderDate;
             orderModel.Buyer = orderDTO.Buyer;
             orderModel.Currency = orderDTO.Currency;
@@ -69,6 +70,7 @@ namespace BLL_Layer.BLL.Implements
             OrderDTO orderDTO = new OrderDTO();
 
             orderDTO.Id = orderModel.Id;
+            orderDTO.PONumber = orderModel.PONumber;
             orderDTO.OrderDate = orderModel.OrderDate;
             orderDTO.Buyer = orderModel.Buyer;
             orderDTO.Currency = orderModel.Currency;
@@ -187,18 +189,9 @@ namespace BLL_Layer.BLL.Implements
             return orderDetailDTO;
         }
 
-        public OrderDetailDTO FindOrderDetail(int id, int orderId)
+        public OrderDetailDTO FindOrderDetail(int id)
         {
-            OrderModel orderModel = db.GetDB().Orders.Find(orderId);
-            List<OrderDetailModel> orderDetailModels = db.GetDB().OrderDetails.Where(p => p.OrderId == orderModel.Id).ToList();
-            OrderDetailModel orderDetail = new OrderDetailModel();
-            foreach (var i in orderDetailModels)
-            {
-                if (i.Id == id)
-                {
-                    orderDetail = i;
-                }
-            }
+            OrderDetailModel orderDetail = db.GetDB().OrderDetails.Find(id);
 
             return ConvertToOrderDetailDTO(orderDetail);
         }
