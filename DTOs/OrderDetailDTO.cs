@@ -72,8 +72,8 @@ namespace DTOs
             }
         }
 
-        [RegularExpression("[^0-9]", ErrorMessage = "Tariff must be numeric")]
         [Display(Name = "Tariff Code")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Tariff must be numeric")]
         public string Tariff { get; set; } = "";
 
         [Required]

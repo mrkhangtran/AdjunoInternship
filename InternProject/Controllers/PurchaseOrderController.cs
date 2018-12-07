@@ -34,6 +34,7 @@ namespace InternProject.Controllers
             return View();
         }
 
+        //Create New Order
         public ActionResult Create(int? id)
         {
             OrderDTO defaultModel = new OrderDTO();
@@ -50,10 +51,22 @@ namespace InternProject.Controllers
             return View(defaultModel);
         }
 
+        //Create New Order
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PONumber,OrderDate,Buyer,Currency,Season,Department,Vendor,Company,Origin,PortOfLoading,PortOfDelivery,OrderType,Factory,Mode,ShipDate,LatestShipDate,DeliveryDate,Status")] OrderDTO addModel)
         {
+            /*List<OrderDetailDTO> orderDetailDTOs = new List<OrderDetailDTO>();
+
+            for (int i = 0; i<= ItemTotal; i++)
+            {
+                OrderDetailDTO orderDetail = new OrderDetailDTO();
+                orderDetail.Id = item[i].Id;
+                orderDetail.ItemNumber = item[i].ItemNumber;
+
+                orderDetailDTOs.Add(orderDetail);
+            }*/
+            
             addModel = SetDropDownList(addModel);
 
             if (PurchaseOrder.UniquePONum(addModel.PONumber, 0))
@@ -73,6 +86,7 @@ namespace InternProject.Controllers
             return View(addModel);
         }
 
+        //Set DropDownList to select on View
         private OrderDTO SetDropDownList(OrderDTO addModel)
         {
             OrderDTO init = new OrderDTO();
@@ -86,6 +100,7 @@ namespace InternProject.Controllers
             return init;
         }
 
+        //Set list of years for Season field
         private IEnumerable<string> SeasonList()
         {
             List<string> seasonList = new List<string>();
@@ -96,6 +111,7 @@ namespace InternProject.Controllers
             return seasonList;
         }
 
+        //Convert string list to SelectListItem list
         private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<string> elements)
         {
             var selectList = new List<SelectListItem>();
@@ -112,7 +128,7 @@ namespace InternProject.Controllers
             return selectList;
         }
 
-        // GET: PurchaseOrder/Edit/5
+        //Edit an Order
         public ActionResult Edit(int? id, int? method)
         {
             if (method != null)
@@ -136,9 +152,7 @@ namespace InternProject.Controllers
             return View(addModel);
         }
 
-        // POST: PurchaseOrder/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //Edit an Order
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,PONumber,OrderDate,Buyer,Currency,Season,Department,Vendor,Company,Origin,PortOfLoading,PortOfDelivery,OrderType,Factory,Mode,ShipDate,LatestShipDate,DeliveryDate,Status")] OrderDTO editModel)
@@ -161,6 +175,7 @@ namespace InternProject.Controllers
             return View(editModel);
         }
 
+        //Create new Item in an Order
         public ActionResult CreateItem(int? id)
         {
             if (id == null)
@@ -175,6 +190,7 @@ namespace InternProject.Controllers
             return View(defaultModel);
         }
 
+        //Create new Item in an Order
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateItem([Bind(Include = "OrderId,ItemNumber,Description,Tariff,Quantity,Cartons,Cube,KGS,UnitPrice,RetailPrice,Warehouse,Size,Colour")] OrderDetailDTO addModel)
@@ -190,7 +206,7 @@ namespace InternProject.Controllers
             return View(addModel);
         }
 
-        // GET: PurchaseOrder/Edit/5
+        //Edit an Item in an Order
         public ActionResult EditItem(int? id)
         {
             if (id == null)
@@ -209,12 +225,10 @@ namespace InternProject.Controllers
             return View(editModel);
         }
 
-        // POST: PurchaseOrder/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //Edit an Item in an Order
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditItem([Bind(Include = "OrderId,ItemNumber,Description,Tariff,Quantity,Cartons,Cube,KGS,UnitPrice,RetailPrice,Warehouse,Size,Colour")] OrderDetailDTO editModel)
+        public ActionResult EditItem([Bind(Include = "Id,OrderId,ItemNumber,Description,Tariff,Quantity,Cartons,Cube,KGS,UnitPrice,RetailPrice,Warehouse,Size,Colour")] OrderDetailDTO editModel)
         {
             if (ModelState.IsValid)
             {

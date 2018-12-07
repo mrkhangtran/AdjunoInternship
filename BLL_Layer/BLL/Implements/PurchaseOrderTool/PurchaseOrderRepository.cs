@@ -100,6 +100,7 @@ namespace BLL_Layer.BLL.Implements
                     OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
 
                     orderDetailDTO.Id = i.Id;
+                    orderDetailDTO.ItemNumber = i.ItemNumber;
                     orderDetailDTO.Description = i.Description;
                     orderDetailDTO.Tariff = i.Tariff;
                     orderDetailDTO.Quantity = i.Quantity;
@@ -174,7 +175,7 @@ namespace BLL_Layer.BLL.Implements
             OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
 
             orderDetailDTO.Id = orderDetail.Id;
-            orderDetailDTO.ItemNumber = orderDetailDTO.ItemNumber;
+            orderDetailDTO.ItemNumber = orderDetail.ItemNumber;
             orderDetailDTO.Description = orderDetail.Description;
             orderDetailDTO.Tariff = orderDetail.Tariff;
             orderDetailDTO.Quantity = orderDetail.Quantity;

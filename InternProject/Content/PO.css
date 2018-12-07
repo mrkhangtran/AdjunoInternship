@@ -1,6 +1,7 @@
 .PO {
   border: 1px solid black;
   color: black;
+  table-layout: fixed;
 }
 
 .PODetail tr:nth-child(even) {

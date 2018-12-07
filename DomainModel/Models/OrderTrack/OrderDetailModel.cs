@@ -33,6 +33,8 @@ namespace DomainModel.Models
         //[Display(Name = "Item Quantity")]
         public float Quantity { get; set; }
 
+        public float ReviseQuantity { get; set; }
+
         [Required]
         public float Cartons { get; set; }
 
