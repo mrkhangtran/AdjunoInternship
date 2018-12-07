@@ -143,6 +143,7 @@ namespace BLL_Layer.BLL.Implements
             OrderDetailModel orderDetailModel = new OrderDetailModel();
 
             orderDetailModel.Id = orderDetailDTO.Id;
+            orderDetailModel.ItemNumber = orderDetailDTO.ItemNumber;
             orderDetailModel.Description = orderDetailDTO.Description;
             orderDetailModel.Tariff = orderDetailDTO.Tariff;
             orderDetailModel.Quantity = orderDetailDTO.Quantity;
@@ -173,6 +174,7 @@ namespace BLL_Layer.BLL.Implements
             OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
 
             orderDetailDTO.Id = orderDetail.Id;
+            orderDetailDTO.ItemNumber = orderDetailDTO.ItemNumber;
             orderDetailDTO.Description = orderDetail.Description;
             orderDetailDTO.Tariff = orderDetail.Tariff;
             orderDetailDTO.Quantity = orderDetail.Quantity;
@@ -200,6 +202,32 @@ namespace BLL_Layer.BLL.Implements
         {
             db.GetDB().OrderDetails.AddOrUpdate(ConvertToOrderDetailModel(newOrderDetail));
             db.GetDB().SaveChanges();
+        }
+
+        public bool UniquePONum(int PONumber, int id)
+        {
+            OrderModel findOrder = db.GetDB().Orders.Find(id);
+            int oldPONum = -1;
+            if (findOrder != null)
+            {
+                oldPONum = findOrder.PONumber;
+            }
+
+            if (PONumber == oldPONum)
+            {
+                return true;
+            }
+            
+            List<OrderModel> orders = db.GetDB().Orders.ToList();
+            foreach (var i in orders)
+            {
+                if (i.PONumber == PONumber)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

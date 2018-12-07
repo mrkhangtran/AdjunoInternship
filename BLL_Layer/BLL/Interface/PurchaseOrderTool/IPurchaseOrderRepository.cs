@@ -17,5 +17,7 @@ namespace BLL_Layer.BLL.Interface
         void AddItem(OrderDetailDTO orderDetail);
         void EditItem(OrderDetailDTO newOrderDetail);
         OrderDetailDTO FindOrderDetail(int id);
+
+        bool UniquePONum(int PONumber, int id);
     }
 }

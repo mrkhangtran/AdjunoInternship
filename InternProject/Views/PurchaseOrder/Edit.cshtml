@@ -11,13 +11,15 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <table class="uk-table">
+    <table class="uk-table PO">
         <tr>
             <td>
-                
+                @Html.LabelFor(model => model.PONumber, htmlAttributes: new { @class = "control-label col-md-2" })
             </td>
             <td>
-    
+                @Html.EditorFor(model => model.PONumber, new { htmlAttributes = new { @class = "uk-input", @id = "from", @onkeyup = "copy()" } })
+                @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "text-danger" })
+                @ViewBag.ErrorMessage
             </td>
             <td colspan="3"></td>
             <td>
@@ -28,22 +30,20 @@
                 </div>
             </td>
         </tr>
+
         <tr>
-
-
             <td>
                 @Html.LabelFor(model => model.PONumber, htmlAttributes: new { @class = "control-label col-md-2" })
             </td>
             <td>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.PONumber, new { htmlAttributes = new { @class = "uk-input" } })
+                    @Html.EditorFor(model => model.PONumber, new { htmlAttributes = new { @class = "uk-input", @id = "to", @onkeyup = "copy2()" } })
                     @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "text-danger" })
+                    @ViewBag.ErrorMessage
                 </div>
             </td>
-
-
             <td>
-                @Html.LabelFor(model => model.Vendor, Model.Vendor.ToString(), htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Vendor, htmlAttributes: new { @class = "control-label col-md-2" })
             </td>
             <td>
                 <div>
@@ -250,10 +250,10 @@
 
     </table>
 
-    <table class="uk-table">
+    <table class="uk-table PODetail">
         <tr>
             <th>
-                @Html.LabelFor(model => model.PODetails.First().Id, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.PODetails.First().ItemNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             </th>
             <th>
                 @Html.LabelFor(model => model.PODetails.First().Description, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -304,7 +304,7 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Id)
+                        @Html.DisplayFor(modelItem => item.ItemNumber)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Description)
@@ -359,8 +359,27 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert('@ViewBag.Message');
+            };
+    </script>
+}
+
 @section Scripts
 {
     <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+    <script type="text/javascript">
+
+        function copy() {
+            document.getElementById("to").value = document.getElementById("from").value;
+        };
+        function copy2() {
+            document.getElementById("from").value = document.getElementById("to").value;
+        };
+
+    </script>
 }

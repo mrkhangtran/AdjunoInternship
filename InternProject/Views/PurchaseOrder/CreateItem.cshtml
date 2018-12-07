@@ -18,15 +18,16 @@
             <input type="submit" value="Apply" class="uk-button uk-button-default" />
         </div>
     </div>
+    <br />
 
-    <table class="uk-table">
+    <table class="uk-table PO">
         <tr>
             <td>
-                @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.ItemNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             </td>
             <td>
-                @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "uk-input" } })
-                @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ItemNumber, new { htmlAttributes = new { @class = "uk-input" } })
+                @Html.ValidationMessageFor(model => model.ItemNumber, "", new { @class = "text-danger" })
             </td>
             <td>
                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -116,7 +117,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Order", "Edit", new { id = Model.OrderId })
 </div>
 
 @section Scripts {

@@ -9,23 +9,24 @@ namespace DTOs
 {
     public class OrderDetailDTO
     {
-        [Key]
+        public int Id { get; set; }
+
         [Required]
         [Display(Name = "Item Number")]
         [Range(0, 9999999999)] //up to 10 digits
-        public int Id { get; set; }
+        public int ItemNumber { get; set; }
 
         [StringLength(255)]
-        public string Description { get; set; }
+        public string Description { get; set; } = "";
 
         [StringLength(30)]
-        public string Warehouse { get; set; }
+        public string Warehouse { get; set; } = "";
 
         [StringLength(30)]
-        public string Colour { get; set; }
+        public string Colour { get; set; } = "";
 
         [StringLength(30)]
-        public string Size { get; set; }
+        public string Size { get; set; } = "";
 
         [Required]
         [Display(Name = "Item Quantity")]
@@ -73,7 +74,7 @@ namespace DTOs
 
         [RegularExpression("[^0-9]", ErrorMessage = "Tariff must be numeric")]
         [Display(Name = "Tariff Code")]
-        public string Tariff { get; set; }
+        public string Tariff { get; set; } = "";
 
         [Required]
         //[ForeignKey("OrderModel")]
