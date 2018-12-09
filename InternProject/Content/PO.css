@@ -4,6 +4,11 @@
   table-layout: fixed;
 }
 
+.PODetail {
+    border: 1px solid black;
+    table-layout: fixed;
+}
+
 .PODetail tr:nth-child(even) {
   background-color: #f2f2f2;
 }

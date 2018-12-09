@@ -88,6 +88,8 @@ namespace DTOs
         //Default value = "New"
         public string Status { get; set; } = "New";
 
+        public OrderDetailDTO orderDetailDTO { get; set; }
+
         public virtual List<OrderDetailDTO> PODetails { get; set; }
     }
 }
