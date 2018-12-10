@@ -126,9 +126,16 @@ namespace BLL_Layer.BLL.Implements
             db.GetDB().SaveChanges();
         }
 
-        public OrderDTO Find(int id)
+        public OrderDTO Find(string id)
         {
-            OrderModel orderModel = db.GetDB().Orders.Find(id);
+            OrderModel orderModel = new OrderModel(); //db.GetDB().Orders.Find(id);
+            foreach (var item in db.GetDB().Orders.ToList())
+            {
+                if (item.PONumber == id)
+                {
+                    orderModel = item;
+                }
+            }
 
             if (orderModel == null) { orderModel = new OrderModel(); }
 
@@ -193,20 +200,27 @@ namespace BLL_Layer.BLL.Implements
             return orderDetailDTO;
         }
 
-        public OrderDetailDTO FindOrderDetail(int id)
+        public OrderDetailDTO FindOrderDetail(string id)
         {
-            OrderDetailModel orderDetail = db.GetDB().OrderDetails.Find(id);
+            OrderDetailModel orderDetail = new OrderDetailModel(); //db.GetDB().OrderDetails.Find(id);
+            foreach (var item in db.GetDB().OrderDetails.ToList())
+            {
+                if (item.ItemNumber == id)
+                {
+                    orderDetail = item;
+                }
+            }
 
             if (orderDetail == null) { orderDetail = new OrderDetailModel(); }
 
             return ConvertToOrderDetailDTO(orderDetail);
         }
 
-        public bool UniquePONum(int PONumber, int? id)
+        public bool UniquePONum(string PONumber, int? id)
         {
             if (id == null) { id = 0; }
             OrderModel findOrder = db.GetDB().Orders.Find(id);
-            int oldPONum = -1;
+            string oldPONum = "-1";
             if (findOrder != null)
             {
                 oldPONum = findOrder.PONumber;
@@ -229,11 +243,11 @@ namespace BLL_Layer.BLL.Implements
             return true;
         }
 
-        public bool UniqueItemNum(int itemNum, int? id)
+        public bool UniqueItemNum(string itemNum, int? id)
         {
             if (id == null) { id = 0; }
             OrderDetailModel findItem = db.GetDB().OrderDetails.Find(id);
-            int oldItemNum = -1;
+            string oldItemNum = "-1";
             if (findItem != null)
             {
                 oldItemNum = findItem.ItemNumber;

@@ -13,8 +13,9 @@ namespace DTOs
 
         [Required]
         [Display(Name = "Item Number")]
-        [Range(0, 9999999999)] //up to 10 digits
-        public int ItemNumber { get; set; }
+        [StringLength(10, ErrorMessage = "Cannot be longer than 10 characters")]
+        [RegularExpression("^[a-zA-Z0-9]+$", ErrorMessage = "Letters and numbers only")]
+        public string ItemNumber { get; set; }
 
         [StringLength(255)]
         public string Description { get; set; } = "";

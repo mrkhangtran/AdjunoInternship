@@ -95,14 +95,12 @@ namespace InternProject.Controllers
                 case "Save":
                     if (addModel.PODetails == null) { addModel.PODetails = new List<OrderDetailDTO>(); }
 
-                    if (!UniqueItemNumber(addModel.orderDetailDTO.ItemNumber, addModel.PODetails))
+                    if ((!UniqueItemNumber(addModel.orderDetailDTO.ItemNumber, addModel.PODetails)) || (!(PurchaseOrder.UniqueItemNum(addModel.orderDetailDTO.ItemNumber, addModel.orderDetailDTO.Id))))
                     {
-                        if (!(PurchaseOrder.UniqueItemNum(addModel.orderDetailDTO.ItemNumber, addModel.orderDetailDTO.Id)))
-                        {
-                            ViewBag.ItemNumberError = "Item Number must be unique.";
-                            return View(addModel);
-                        }
+                        ViewBag.ItemNumberError = "Item Number must be unique.";
+                        return View(addModel);
                     }
+
 
                     addModel.PODetails.Add(addModel.orderDetailDTO);
                     break;
@@ -128,7 +126,7 @@ namespace InternProject.Controllers
             return View(addModel);
         }
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
@@ -137,8 +135,8 @@ namespace InternProject.Controllers
             else
             {
                 OrderDTO editModel = new OrderDTO();
-                int Id = id ?? default(int);
-                editModel = PurchaseOrder.Find(Id);
+                //int Id = id ?? default(int);
+                editModel = PurchaseOrder.Find(id);
                 editModel.orderDetailDTO = new OrderDetailDTO();
                 ViewBag.Method = "Edit Order Number: " + editModel.PONumber;
                 editModel = SetDropDownList(editModel);
@@ -210,7 +208,7 @@ namespace InternProject.Controllers
             return View(addModel);
         }
 
-        public ActionResult Copy(int? id)
+        public ActionResult Copy(string id)
         {
             if (id == null)
             {
@@ -219,12 +217,12 @@ namespace InternProject.Controllers
             else
             {
                 OrderDTO editModel = new OrderDTO();
-                int Id = id ?? default(int);
-                editModel = PurchaseOrder.Find(Id);
+                //int Id = id ?? default(int);
+                editModel = PurchaseOrder.Find(id);
                 editModel.Id = 0;
                 ViewBag.Method = "Copy from Order Number: " + editModel.PONumber;
 
-                editModel.PONumber = 0;
+                editModel.PONumber = "";
                 foreach (var item in editModel.PODetails) { item.Id = 0; }
 
                 editModel.orderDetailDTO = new OrderDetailDTO();
@@ -297,7 +295,7 @@ namespace InternProject.Controllers
             return View(addModel);
         }
 
-        private bool UniqueItemNumber(int itemNum, List<OrderDetailDTO> orderDetails)
+        private bool UniqueItemNumber(string itemNum, List<OrderDetailDTO> orderDetails)
         {
             foreach (var item in orderDetails)
             {

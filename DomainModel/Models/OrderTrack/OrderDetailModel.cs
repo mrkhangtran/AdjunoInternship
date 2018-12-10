@@ -9,7 +9,7 @@ namespace DomainModel.Models
 {
     public class OrderDetailModel : Base
     {
-        public int ItemNumber { get; set; }
+        public string ItemNumber { get; set; }
 
         //unknown
         public string Line { get; set; }
