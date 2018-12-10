@@ -100,6 +100,7 @@ namespace BLL_Layer.BLL.Implements
                     OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
 
                     orderDetailDTO.Id = i.Id;
+                    orderDetailDTO.ItemNumber = i.ItemNumber;
                     orderDetailDTO.Description = i.Description;
                     orderDetailDTO.Tariff = i.Tariff;
                     orderDetailDTO.Quantity = i.Quantity;
@@ -119,21 +120,24 @@ namespace BLL_Layer.BLL.Implements
             return orderDTO;
         }
 
-        public void Add(OrderDTO orderDTO)
-        {
-            db.GetDB().Orders.Add(ConvertToOrderModel(orderDTO));
-            db.GetDB().SaveChanges();
-        }
-
-        public void Edit(OrderDTO newOrderDTO)
+        public void AddOrUpdate(OrderDTO newOrderDTO)
         {
             db.GetDB().Orders.AddOrUpdate(ConvertToOrderModel(newOrderDTO));
             db.GetDB().SaveChanges();
         }
 
-        public OrderDTO Find(int id)
+        public OrderDTO Find(string id)
         {
-            OrderModel orderModel = db.GetDB().Orders.Find(id);
+            OrderModel orderModel = new OrderModel(); //db.GetDB().Orders.Find(id);
+            foreach (var item in db.GetDB().Orders.ToList())
+            {
+                if (item.PONumber == id)
+                {
+                    orderModel = item;
+                }
+            }
+
+            if (orderModel == null) { orderModel = new OrderModel(); }
 
             return ConvertToOrderDTO(orderModel);
         }
@@ -157,15 +161,20 @@ namespace BLL_Layer.BLL.Implements
             orderDetailModel.Colour = orderDetailDTO.Colour;
             orderDetailModel.OrderId = orderDetailDTO.OrderId;
 
+            if (orderDetailModel.OrderId == 0)
+            {
+                orderDetailModel.OrderId = db.GetDB().Orders.ToList().Last().Id;
+            }
+
             orderDetailModel.Line = "";
             orderDetailModel.Item = "";
 
             return orderDetailModel;
         }
 
-        public void AddItem(OrderDetailDTO orderDetail)
+        public void AddOrUpdateItem(OrderDetailDTO newOrderDetail)
         {
-            db.GetDB().OrderDetails.Add(ConvertToOrderDetailModel(orderDetail));
+            db.GetDB().OrderDetails.AddOrUpdate(ConvertToOrderDetailModel(newOrderDetail));
             db.GetDB().SaveChanges();
         }
 
@@ -174,7 +183,7 @@ namespace BLL_Layer.BLL.Implements
             OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
 
             orderDetailDTO.Id = orderDetail.Id;
-            orderDetailDTO.ItemNumber = orderDetailDTO.ItemNumber;
+            orderDetailDTO.ItemNumber = orderDetail.ItemNumber;
             orderDetailDTO.Description = orderDetail.Description;
             orderDetailDTO.Tariff = orderDetail.Tariff;
             orderDetailDTO.Quantity = orderDetail.Quantity;
@@ -191,23 +200,27 @@ namespace BLL_Layer.BLL.Implements
             return orderDetailDTO;
         }
 
-        public OrderDetailDTO FindOrderDetail(int id)
+        public OrderDetailDTO FindOrderDetail(string id)
         {
-            OrderDetailModel orderDetail = db.GetDB().OrderDetails.Find(id);
+            OrderDetailModel orderDetail = new OrderDetailModel(); //db.GetDB().OrderDetails.Find(id);
+            foreach (var item in db.GetDB().OrderDetails.ToList())
+            {
+                if (item.ItemNumber == id)
+                {
+                    orderDetail = item;
+                }
+            }
+
+            if (orderDetail == null) { orderDetail = new OrderDetailModel(); }
 
             return ConvertToOrderDetailDTO(orderDetail);
         }
 
-        public void EditItem(OrderDetailDTO newOrderDetail)
+        public bool UniquePONum(string PONumber, int? id)
         {
-            db.GetDB().OrderDetails.AddOrUpdate(ConvertToOrderDetailModel(newOrderDetail));
-            db.GetDB().SaveChanges();
-        }
-
-        public bool UniquePONum(int PONumber, int id)
-        {
+            if (id == null) { id = 0; }
             OrderModel findOrder = db.GetDB().Orders.Find(id);
-            int oldPONum = -1;
+            string oldPONum = "-1";
             if (findOrder != null)
             {
                 oldPONum = findOrder.PONumber;
@@ -222,6 +235,33 @@ namespace BLL_Layer.BLL.Implements
             foreach (var i in orders)
             {
                 if (i.PONumber == PONumber)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public bool UniqueItemNum(string itemNum, int? id)
+        {
+            if (id == null) { id = 0; }
+            OrderDetailModel findItem = db.GetDB().OrderDetails.Find(id);
+            string oldItemNum = "-1";
+            if (findItem != null)
+            {
+                oldItemNum = findItem.ItemNumber;
+            }
+
+            if (itemNum == oldItemNum)
+            {
+                return true;
+            }
+
+            List<OrderDetailModel> orderDetailModels = db.GetDB().OrderDetails.ToList();
+            foreach (var i in orderDetailModels)
+            {
+                if (i.ItemNumber == itemNum)
                 {
                     return false;
                 }

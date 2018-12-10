@@ -184,6 +184,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DisplayAndFilterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MultipleButtonAttribute.cs" />
     <Compile Include="Controllers\ProgressCheckController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Global.asax.cs">
@@ -268,6 +269,7 @@
     <Content Include="Views\ProgressCheck\Index.cshtml" />
     <Content Include="Views\PurchaseOrder\CreateItem.cshtml" />
     <Content Include="Views\PurchaseOrder\EditItem.cshtml" />
+    <Content Include="Views\PurchaseOrder\Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

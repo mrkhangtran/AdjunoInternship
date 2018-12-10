@@ -27,52 +27,285 @@ namespace InternProject.Controllers
         {
             if ((id != null) && (method != null))
             {
-                if (method == 1) ViewBag.Message = "The Purchase Order number " + id.ToString() + " is created successfully. Thank you.";
-                if (method == 2) ViewBag.Message = "The Purchase Order number " + id.ToString() + " is edited successfully. Thank you.";
+                string message = "The Purchase Order number " + id.ToString() + " is ";
+                switch (method)
+                {
+                    case 1:
+                        message += "created";
+                        break;
+                    case 2:
+                        message += "edited";
+                        break;
+                    case 3:
+                        message += "copied";
+                        break;
+
+                }
+                message += "successfully.Thank you.";
+                ViewBag.Message = message;
             }
 
             return View();
         }
 
-        public ActionResult Create(int? id)
+        //Create New Order
+        public ActionResult Create()
         {
+            ViewBag.Method = "Create Order";
             OrderDTO defaultModel = new OrderDTO();
-
-            if (id != null)
-            {
-                int Id = id ?? default(int);
-                defaultModel = PurchaseOrder.Find(Id);
-                defaultModel.PONumber = 0;
-            }
-
+            defaultModel.orderDetailDTO = new OrderDetailDTO();
             defaultModel = SetDropDownList(defaultModel);
+            ViewBag.ItemId = -1;
 
             return View(defaultModel);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PONumber,OrderDate,Buyer,Currency,Season,Department,Vendor,Company,Origin,PortOfLoading,PortOfDelivery,OrderType,Factory,Mode,ShipDate,LatestShipDate,DeliveryDate,Status")] OrderDTO addModel)
+        public ActionResult Create(OrderDTO addModel, string method)
         {
             addModel = SetDropDownList(addModel);
+            ViewBag.ItemId = -1;
 
-            if (PurchaseOrder.UniquePONum(addModel.PONumber, 0))
+            switch (method)
             {
-                if (ModelState.IsValid)
-                {
-                    PurchaseOrder.Add(addModel);
+                case "Apply":
+                    if (addModel.PODetails == null)
+                    {
+                        ViewBag.OrderDetailError = "Please add at least 1 item detail.";
+                        return View(addModel);
+                    }
 
-                    return RedirectToAction("Index", new { id = addModel.PONumber, method = 1 });
-                }
-            }
-            else
-            {
-                ViewBag.ErrorMessage = "PO Number must be unique.";
+                    if (!(PurchaseOrder.UniquePONum(addModel.PONumber, addModel.Id)))
+                    {
+                        ViewBag.PONumberError = "PO Number must be unique.";
+                        return View(addModel);
+                    }
+
+                    if (ModelState.IsValid)
+                    {
+                        PurchaseOrder.AddOrUpdate(addModel);
+                        foreach (var i in addModel.PODetails)
+                        {
+                            PurchaseOrder.AddOrUpdateItem(i);
+                        }
+
+                        return RedirectToAction("Index", new { id = addModel.PONumber, method = 1 });
+                    }
+                    break;
+                case "Save":
+                    if (addModel.PODetails == null) { addModel.PODetails = new List<OrderDetailDTO>(); }
+
+                    if ((!UniqueItemNumber(addModel.orderDetailDTO.ItemNumber, addModel.PODetails)) || (!(PurchaseOrder.UniqueItemNum(addModel.orderDetailDTO.ItemNumber, addModel.orderDetailDTO.Id))))
+                    {
+                        ViewBag.ItemNumberError = "Item Number must be unique.";
+                        return View(addModel);
+                    }
+
+
+                    addModel.PODetails.Add(addModel.orderDetailDTO);
+                    break;
+                default:
+                    int itemId = int.Parse(new string(method.Where(char.IsDigit).ToArray()));
+                    ModelState.Clear();
+                    if (method.Contains("Update"))
+                    {
+                        addModel.PODetails[itemId] = addModel.orderDetailDTO;
+                    }
+                    else if (method.Contains("Delete"))
+                    {
+                        addModel.PODetails.Remove(addModel.PODetails[itemId]);
+                    }
+                    else
+                    {
+                        addModel.orderDetailDTO = addModel.PODetails[itemId];
+                        ViewBag.ItemId = itemId;
+                    }
+                    break;
             }
 
             return View(addModel);
         }
 
+        public ActionResult Edit(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                OrderDTO editModel = new OrderDTO();
+                //int Id = id ?? default(int);
+                editModel = PurchaseOrder.Find(id);
+                editModel.orderDetailDTO = new OrderDetailDTO();
+                ViewBag.Method = "Edit Order Number: " + editModel.PONumber;
+                editModel = SetDropDownList(editModel);
+                ViewBag.ItemId = -1;
+
+                return View(editModel);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Edit(OrderDTO addModel, string method)
+        {
+            addModel = SetDropDownList(addModel);
+            ViewBag.ItemId = -1;
+
+            switch (method)
+            {
+                case "Apply":
+                    if (!(PurchaseOrder.UniquePONum(addModel.PONumber, addModel.Id)))
+                    {
+                        ViewBag.PONumberError = "PO Number must be unique.";
+                        return View(addModel);
+                    }
+
+                    if (ModelState.IsValid)
+                    {
+                        PurchaseOrder.AddOrUpdate(addModel);
+                        foreach (var i in addModel.PODetails)
+                        {
+                            PurchaseOrder.AddOrUpdateItem(i);
+                        }
+
+                        return RedirectToAction("Index", new { id = addModel.PONumber, method = 2 });
+                    }
+                    break;
+                case "Save":
+                    if (addModel.PODetails == null) { addModel.PODetails = new List<OrderDetailDTO>(); }
+
+                    if (!UniqueItemNumber(addModel.orderDetailDTO.ItemNumber, addModel.PODetails))
+                    {
+                        if (!(PurchaseOrder.UniqueItemNum(addModel.orderDetailDTO.ItemNumber, addModel.orderDetailDTO.Id)))
+                        {
+                            ViewBag.ItemNumberError = "Item Number must be unique.";
+                            return View(addModel);
+                        }
+                    }
+
+                    addModel.PODetails.Add(addModel.orderDetailDTO);
+                    break;
+                default:
+                    int itemId = int.Parse(new string(method.Where(char.IsDigit).ToArray()));
+                    ModelState.Clear();
+                    if (method.Contains("Update"))
+                    {
+                        addModel.PODetails[itemId] = addModel.orderDetailDTO;
+                    }
+                    else if (method.Contains("Delete"))
+                    {
+                        addModel.PODetails.Remove(addModel.PODetails[itemId]);
+                    }
+                    else
+                    {
+                        addModel.orderDetailDTO = addModel.PODetails[itemId];
+                        ViewBag.ItemId = itemId;
+                    }
+                    break;
+            }
+
+            return View(addModel);
+        }
+
+        public ActionResult Copy(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                OrderDTO editModel = new OrderDTO();
+                //int Id = id ?? default(int);
+                editModel = PurchaseOrder.Find(id);
+                editModel.Id = 0;
+                ViewBag.Method = "Copy from Order Number: " + editModel.PONumber;
+
+                editModel.PONumber = "";
+                foreach (var item in editModel.PODetails) { item.Id = 0; }
+
+                editModel.orderDetailDTO = new OrderDetailDTO();
+                editModel = SetDropDownList(editModel);
+                ViewBag.ItemId = -1;
+
+                return View(editModel);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Copy(OrderDTO addModel, string method)
+        {
+            addModel = SetDropDownList(addModel);
+            ViewBag.ItemId = -1;
+
+            switch (method)
+            {
+                case "Apply":
+                    if (!(PurchaseOrder.UniquePONum(addModel.PONumber, addModel.Id)))
+                    {
+                        ViewBag.PONumberError = "PO Number must be unique.";
+                        return View(addModel);
+                    }
+
+                    if (ModelState.IsValid)
+                    {
+                        PurchaseOrder.AddOrUpdate(addModel);
+                        foreach (var i in addModel.PODetails)
+                        {
+                            PurchaseOrder.AddOrUpdateItem(i);
+                        }
+
+                        return RedirectToAction("Index", new { id = addModel.PONumber, method = 3 });
+                    }
+                    break;
+                case "Save":
+                    if (addModel.PODetails == null) { addModel.PODetails = new List<OrderDetailDTO>(); }
+
+                    if (!UniqueItemNumber(addModel.orderDetailDTO.ItemNumber, addModel.PODetails))
+                    {
+                        if (!(PurchaseOrder.UniqueItemNum(addModel.orderDetailDTO.ItemNumber, addModel.orderDetailDTO.Id)))
+                        {
+                            ViewBag.ItemNumberError = "Item Number must be unique.";
+                            return View(addModel);
+                        }
+                    }
+
+                    addModel.PODetails.Add(addModel.orderDetailDTO);
+                    break;
+                default:
+                    int itemId = int.Parse(new string(method.Where(char.IsDigit).ToArray()));
+                    ModelState.Clear();
+                    if (method.Contains("Update"))
+                    {
+                        addModel.PODetails[itemId] = addModel.orderDetailDTO;
+                    }
+                    else if (method.Contains("Delete"))
+                    {
+                        addModel.PODetails.Remove(addModel.PODetails[itemId]);
+                    }
+                    else
+                    {
+                        addModel.orderDetailDTO = addModel.PODetails[itemId];
+                        ViewBag.ItemId = itemId;
+                    }
+                    break;
+            }
+
+            return View(addModel);
+        }
+
+        private bool UniqueItemNumber(string itemNum, List<OrderDetailDTO> orderDetails)
+        {
+            foreach (var item in orderDetails)
+            {
+                if (itemNum == item.ItemNumber) { return false; }
+            }
+
+            return true;
+        }
+
+        //Set DropDownList to select on View
         private OrderDTO SetDropDownList(OrderDTO addModel)
         {
             OrderDTO init = new OrderDTO();
@@ -86,6 +319,7 @@ namespace InternProject.Controllers
             return init;
         }
 
+        //Set list of years for Season field
         private IEnumerable<string> SeasonList()
         {
             List<string> seasonList = new List<string>();
@@ -96,6 +330,7 @@ namespace InternProject.Controllers
             return seasonList;
         }
 
+        //Convert string list to SelectListItem list
         private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<string> elements)
         {
             var selectList = new List<SelectListItem>();
@@ -111,120 +346,6 @@ namespace InternProject.Controllers
 
             return selectList;
         }
-
-        // GET: PurchaseOrder/Edit/5
-        public ActionResult Edit(int? id, int? method)
-        {
-            if (method != null)
-            {
-                if (method == 1) ViewBag.Message = "New item is added successfully. Thank you.";
-                if (method == 2) ViewBag.Message = "Item is edited successfully. Thank you.";
-            }
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            int Id = id ?? default(int);
-            OrderDTO addModel = PurchaseOrder.Find(Id);
-            addModel = SetDropDownList(addModel);
-            if (addModel == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(addModel);
-        }
-
-        // POST: PurchaseOrder/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,PONumber,OrderDate,Buyer,Currency,Season,Department,Vendor,Company,Origin,PortOfLoading,PortOfDelivery,OrderType,Factory,Mode,ShipDate,LatestShipDate,DeliveryDate,Status")] OrderDTO editModel)
-        {
-            editModel = SetDropDownList(editModel);
-
-            if (PurchaseOrder.UniquePONum(editModel.PONumber, editModel.Id))
-            {
-                if (ModelState.IsValid)
-                {
-                    PurchaseOrder.Edit(editModel);
-
-                    return RedirectToAction("Index", new { id = editModel.PONumber, method = 2 });
-                }
-            }
-            else
-            {
-                ViewBag.ErrorMessage = "PO Number must be unique.";
-            }
-            return View(editModel);
-        }
-
-        public ActionResult CreateItem(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            int Id = id ?? default(int);
-
-            OrderDetailDTO defaultModel = new OrderDetailDTO();
-            defaultModel.OrderId = Id;
-
-            return View(defaultModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateItem([Bind(Include = "OrderId,ItemNumber,Description,Tariff,Quantity,Cartons,Cube,KGS,UnitPrice,RetailPrice,Warehouse,Size,Colour")] OrderDetailDTO addModel)
-        {
-
-            if (ModelState.IsValid)
-            {
-                PurchaseOrder.AddItem(addModel);
-
-                return RedirectToAction("Edit", new { id = addModel.OrderId, method = 1 });
-            }
-
-            return View(addModel);
-        }
-
-        // GET: PurchaseOrder/Edit/5
-        public ActionResult EditItem(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            int Id = id ?? default(int);
-
-            OrderDetailDTO editModel = PurchaseOrder.FindOrderDetail(Id);
-
-            if (editModel == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(editModel);
-        }
-
-        // POST: PurchaseOrder/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditItem([Bind(Include = "OrderId,ItemNumber,Description,Tariff,Quantity,Cartons,Cube,KGS,UnitPrice,RetailPrice,Warehouse,Size,Colour")] OrderDetailDTO editModel)
-        {
-            if (ModelState.IsValid)
-            {
-                PurchaseOrder.EditItem(editModel);
-
-                return RedirectToAction("Edit", new { id = editModel.OrderId, method = 2 });
-            }
-            return View(editModel);
-        }
-
 
         // GET: PurchaseOrder/Details/5
         /*public ActionResult Details(int? id)

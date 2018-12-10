@@ -14,8 +14,9 @@ namespace DTOs
         public int Id { get; set; }
 
         [Display(Name = "PO Number")]
-        [Range(0, 9999999999)] //up to 10 digits
-        public int PONumber { get; set; }
+        [StringLength(10, ErrorMessage = "Cannot be longer than 10 characters")]
+        [RegularExpression("^[a-zA-Z0-9]+$", ErrorMessage = "Letters and numbers only")]
+        public string PONumber { get; set; }
 
         //DropList from 2010 to 2020
         //Default value is Current Date
@@ -33,13 +34,13 @@ namespace DTOs
         public string Season { get; set; }
         public IEnumerable<SelectListItem> Seasons { get; set; }
 
-        [StringLength(30, ErrorMessage = "Cannot be longer than 30 character")]
+        [StringLength(30, ErrorMessage = "Cannot be longer than 30 characters")]
         public string Department { get; set; }
 
-        [StringLength(30, ErrorMessage = "Cannot be longer than 30 character")]
+        [StringLength(30, ErrorMessage = "Cannot be longer than 30 characters")]
         public string Vendor { get; set; }
 
-        [StringLength(30, ErrorMessage = "Cannot be longer than 30 character")]
+        [StringLength(30, ErrorMessage = "Cannot be longer than 30 characters")]
         public string Company { get; set; }
 
         //Droplist Vietnam-HongKong
@@ -60,10 +61,10 @@ namespace DTOs
         public IEnumerable<SelectListItem> Ports { get; set; }
 
         [Display(Name = "Order Type")]
-        [StringLength(30, ErrorMessage = "Cannot be longer than 30 character")]
+        [StringLength(30, ErrorMessage = "Cannot be longer than 30 characters")]
         public string OrderType { get; set; }
 
-        [StringLength(30, ErrorMessage = "Cannot be longer than 30 character")]
+        [StringLength(30, ErrorMessage = "Cannot be longer than 30 characters")]
         public string Factory { get; set; }
 
         //DropList Road-Sea-Air
@@ -87,6 +88,8 @@ namespace DTOs
 
         //Default value = "New"
         public string Status { get; set; } = "New";
+
+        public OrderDetailDTO orderDetailDTO { get; set; }
 
         public virtual List<OrderDetailDTO> PODetails { get; set; }
     }

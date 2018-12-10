@@ -9,7 +9,7 @@ namespace DomainModel.Models
 {
     public class OrderDetailModel : Base
     {
-        public int ItemNumber { get; set; }
+        public string ItemNumber { get; set; }
 
         //unknown
         public string Line { get; set; }
@@ -32,6 +32,8 @@ namespace DomainModel.Models
         [Required]
         //[Display(Name = "Item Quantity")]
         public float Quantity { get; set; }
+
+        public float ReviseQuantity { get; set; }
 
         [Required]
         public float Cartons { get; set; }

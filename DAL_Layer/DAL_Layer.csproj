@@ -99,6 +99,18 @@
     <Compile Include="Migrations\201812070331217_AddPONumber.Designer.cs">
       <DependentUpon>201812070331217_AddPONumber.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812070813032_AddItemNumber.cs" />
+    <Compile Include="Migrations\201812070813032_AddItemNumber.Designer.cs">
+      <DependentUpon>201812070813032_AddItemNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812070854095_AddReviseQuantity.cs" />
+    <Compile Include="Migrations\201812070854095_AddReviseQuantity.Designer.cs">
+      <DependentUpon>201812070854095_AddReviseQuantity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812100310579_Change_PONum_from_Int_to_String.cs" />
+    <Compile Include="Migrations\201812100310579_Change_PONum_from_Int_to_String.Designer.cs">
+      <DependentUpon>201812100310579_Change_PONum_from_Int_to_String.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -124,6 +136,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812070331217_AddPONumber.resx">
       <DependentUpon>201812070331217_AddPONumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812070813032_AddItemNumber.resx">
+      <DependentUpon>201812070813032_AddItemNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812070854095_AddReviseQuantity.resx">
+      <DependentUpon>201812070854095_AddReviseQuantity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812100310579_Change_PONum_from_Int_to_String.resx">
+      <DependentUpon>201812100310579_Change_PONum_from_Int_to_String.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
